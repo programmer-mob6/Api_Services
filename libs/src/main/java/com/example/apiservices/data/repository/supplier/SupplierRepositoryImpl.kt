@@ -73,14 +73,22 @@ class SupplierRepositoryImpl @Inject constructor(
         val response = supplierApiDataSource.updateIsActiveSupplier(body)
 
         if (response.isSuccessful && response.code() == 200) {
-            Log.d("SupplierRepositoryImpl", "putIsActiveSupplier: Success")
             emit(Result.Success(Unit))
         } else {
-            Log.d("SupplierRepositoryImpl", "putIsActiveSupplier: Error")
             emit(Result.Error("Response is not successful"))
         }
     }.catch {
-        Log.d("SupplierRepositoryImpl", "${it.message}")
+        emit(Result.Error(it.message))
+    }.flowOn(ioDispatcher)
+
+    override fun updateSupplier(body: PostSupplierRequestBody): Flow<Result<Unit>> = flow {
+        val response = supplierApiDataSource.updateSUpplier(body)
+        if (response.isSuccessful && response.code() == 200) {
+            emit(Result.Success(Unit))
+        } else {
+            emit(Result.Error("Response is not successful"))
+        }
+    }.catch {
         emit(Result.Error(it.message))
     }.flowOn(ioDispatcher)
 

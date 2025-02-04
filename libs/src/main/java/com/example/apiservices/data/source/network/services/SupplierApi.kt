@@ -38,8 +38,13 @@ interface SupplierApi {
         @Body body: DeleteSupplierRequestBody
     ): Response<GeneralResponse>
 
-    @PUT("activestatus")
+    @PUT("suppliers/activestatus")
     suspend fun updateActiveStatus(
         @Body body: PutSupplierIsActiveRequestBody,
+    ): Response<GeneralResponse>
+
+    @PUT("suppliers")
+    suspend fun updateSupplier(
+        @Body body: PostSupplierRequestBody,
     ): Response<GeneralResponse>
 }

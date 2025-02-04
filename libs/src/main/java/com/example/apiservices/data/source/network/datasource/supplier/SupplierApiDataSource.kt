@@ -31,4 +31,8 @@ interface SupplierApiDataSource {
     suspend fun updateIsActiveSupplier(
         body: PutSupplierIsActiveRequestBody
     ): Response<GeneralResponse>
+
+    suspend fun updateSUpplier(
+        body: PostSupplierRequestBody
+    ): Response<GeneralResponse>
 }

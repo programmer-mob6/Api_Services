@@ -40,3 +40,10 @@ class PutIsActiveSupplierUseCase @Inject constructor(
     operator fun invoke(body: PutSupplierIsActiveRequestBody) =
         repository.putIsActiveSupplier(body)
 }
+
+class UpdateSupplierByIdUseCase @Inject constructor(
+    private val repository: SupplierRepository
+) {
+    operator fun invoke(body: PostSupplierRequestBody) =
+        repository.updateSupplier(body)
+}

@@ -36,5 +36,9 @@ class SupplierApiDataSourceImpl @Inject constructor(
         return supplierAPI.updateActiveStatus(body)
     }
 
+    override suspend fun updateSUpplier(body: PostSupplierRequestBody): Response<GeneralResponse> {
+        return supplierAPI.updateSupplier(body)
+    }
+
 
 }

@@ -18,4 +18,6 @@ interface SupplierRepository {
     fun deleteAssetById(body: DeleteSupplierRequestBody): Flow<Result<Unit>>
 
     fun putIsActiveSupplier(body: PutSupplierIsActiveRequestBody): Flow<Result<Unit>>
+
+    fun updateSupplier(body: PostSupplierRequestBody) : Flow<Result<Unit>>
 }
