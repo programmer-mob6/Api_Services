@@ -12,8 +12,6 @@ data class GetSupplierDetailResponse(
     val status: String = ""
 ) {
     data class Data(
-//        @SerializedName("id")
-//        val id: String = "",
         @SerializedName("companyname")
         val companyname: String = "",
         @SerializedName("isactive")

@@ -1,10 +1,13 @@
 package com.example.apiservices.data.source.network.datasource.supplier
 
 import com.example.apiservices.data.source.network.model.request.DeleteSupplierRequestBody
+import com.example.apiservices.data.source.network.model.request.GetChangeLogQueryParams
 import com.example.apiservices.data.source.network.model.request.GetSupplierQueryParams
 import com.example.apiservices.data.source.network.model.request.PostSupplierRequestBody
 import com.example.apiservices.data.source.network.model.request.PutSupplierIsActiveRequestBody
+import com.example.apiservices.data.source.network.model.request.PutSupplierRequestBody
 import com.example.apiservices.data.source.network.model.response.GeneralResponse
+import com.example.apiservices.data.source.network.model.response.GetChangeLogResponse
 import com.example.apiservices.data.source.network.model.response.GetSupplierDetailResponse
 import com.example.apiservices.data.source.network.model.response.GetSupplierResponse
 import com.example.apiservices.data.source.network.model.response.PostSupplierResponse
@@ -36,8 +39,12 @@ class SupplierApiDataSourceImpl @Inject constructor(
         return supplierAPI.updateActiveStatus(body)
     }
 
-    override suspend fun updateSUpplier(body: PostSupplierRequestBody): Response<GeneralResponse> {
+    override suspend fun updateSUpplier(body: PutSupplierRequestBody): Response<GeneralResponse> {
         return supplierAPI.updateSupplier(body)
+    }
+
+    override suspend fun getChangeLog(query: GetChangeLogQueryParams): Response<GetChangeLogResponse> {
+        return supplierAPI.getChangeLog(query.toQueryMap())
     }
 
 

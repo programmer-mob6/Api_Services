@@ -3,7 +3,9 @@ package com.example.apiservices.data.source.network.services
 import com.example.apiservices.data.source.network.model.request.DeleteSupplierRequestBody
 import com.example.apiservices.data.source.network.model.request.PostSupplierRequestBody
 import com.example.apiservices.data.source.network.model.request.PutSupplierIsActiveRequestBody
+import com.example.apiservices.data.source.network.model.request.PutSupplierRequestBody
 import com.example.apiservices.data.source.network.model.response.GeneralResponse
+import com.example.apiservices.data.source.network.model.response.GetChangeLogResponse
 import com.example.apiservices.data.source.network.model.response.GetSupplierDetailResponse
 import com.example.apiservices.data.source.network.model.response.GetSupplierResponse
 import com.example.apiservices.data.source.network.model.response.PostSupplierResponse
@@ -45,6 +47,11 @@ interface SupplierApi {
 
     @PUT("suppliers")
     suspend fun updateSupplier(
-        @Body body: PostSupplierRequestBody,
+        @Body body: PutSupplierRequestBody,
     ): Response<GeneralResponse>
+
+    @GET("changelog")
+    suspend fun getChangeLog(
+        @QueryMap queryMap: Map<String, String?> = mapOf()
+    ): Response<GetChangeLogResponse>
 }

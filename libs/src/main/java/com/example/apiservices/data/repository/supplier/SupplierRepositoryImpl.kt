@@ -3,12 +3,15 @@ package com.example.apiservices.data.repository.supplier
 import android.util.Log
 import com.example.apiservices.base.Result
 import com.example.apiservices.data.mapper.supplier.SupplierMapper
+import com.example.apiservices.data.model.supplier.ChangeLogEntity
 import com.example.apiservices.data.model.supplier.SupplierEntity
 import com.example.apiservices.data.source.network.datasource.supplier.SupplierApiDataSource
 import com.example.apiservices.data.source.network.model.request.DeleteSupplierRequestBody
+import com.example.apiservices.data.source.network.model.request.GetChangeLogQueryParams
 import com.example.apiservices.data.source.network.model.request.GetSupplierQueryParams
 import com.example.apiservices.data.source.network.model.request.PostSupplierRequestBody
 import com.example.apiservices.data.source.network.model.request.PutSupplierIsActiveRequestBody
+import com.example.apiservices.data.source.network.model.request.PutSupplierRequestBody
 import com.example.apiservices.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +27,6 @@ class SupplierRepositoryImpl @Inject constructor(
 ) : SupplierRepository {
 
     override fun getSupplier(query: GetSupplierQueryParams): Flow<Result<List<SupplierEntity>>> = flow {
-//        emit(Result.Success(supplierMapper.mapSuppliers()))
         val response = supplierApiDataSource.getSupplier(query)
         val resData = response.body()?.data.orEmpty()
 
@@ -81,10 +83,23 @@ class SupplierRepositoryImpl @Inject constructor(
         emit(Result.Error(it.message))
     }.flowOn(ioDispatcher)
 
-    override fun updateSupplier(body: PostSupplierRequestBody): Flow<Result<Unit>> = flow {
+    override fun updateSupplier(body: PutSupplierRequestBody): Flow<Result<Unit>> = flow {
         val response = supplierApiDataSource.updateSUpplier(body)
         if (response.isSuccessful && response.code() == 200) {
             emit(Result.Success(Unit))
+        } else {
+            emit(Result.Error("Response is not successful"))
+        }
+    }.catch {
+        emit(Result.Error(it.message))
+    }.flowOn(ioDispatcher)
+
+    override fun getChangeLog(queryParams: GetChangeLogQueryParams): Flow<Result<List<ChangeLogEntity>>> = flow {
+        val response = supplierApiDataSource.getChangeLog(queryParams)
+        val resData = response.body()?.data.orEmpty()
+
+        if (response.isSuccessful && response.code() == 200) {
+            emit(Result.Success(supplierMapper.mapChangeLog(resData)))
         } else {
             emit(Result.Error("Response is not successful"))
         }

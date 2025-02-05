@@ -2,9 +2,11 @@ package com.example.apiservices.domain
 
 import com.example.apiservices.data.repository.supplier.SupplierRepository
 import com.example.apiservices.data.source.network.model.request.DeleteSupplierRequestBody
+import com.example.apiservices.data.source.network.model.request.GetChangeLogQueryParams
 import com.example.apiservices.data.source.network.model.request.GetSupplierQueryParams
 import com.example.apiservices.data.source.network.model.request.PostSupplierRequestBody
 import com.example.apiservices.data.source.network.model.request.PutSupplierIsActiveRequestBody
+import com.example.apiservices.data.source.network.model.request.PutSupplierRequestBody
 import javax.inject.Inject
 
 class GetSupplierUseCase @Inject constructor(
@@ -44,6 +46,13 @@ class PutIsActiveSupplierUseCase @Inject constructor(
 class UpdateSupplierByIdUseCase @Inject constructor(
     private val repository: SupplierRepository
 ) {
-    operator fun invoke(body: PostSupplierRequestBody) =
+    operator fun invoke(body: PutSupplierRequestBody) =
         repository.updateSupplier(body)
+}
+
+class GetChangeLogUseCase @Inject constructor(
+    private val repository: SupplierRepository
+) {
+    operator fun invoke(queryParams: GetChangeLogQueryParams) =
+        repository.getChangeLog(queryParams)
 }
