@@ -1,6 +1,5 @@
 package com.example.apiservices.data.source.network.model.response
 
-
 import com.google.gson.annotations.SerializedName
 
 data class GetSupplierResponse(

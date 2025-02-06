@@ -5,13 +5,14 @@ import com.example.apiservices.data.source.network.model.request.PostSupplierReq
 import com.example.apiservices.data.source.network.model.request.PutSupplierIsActiveRequestBody
 import com.example.apiservices.data.source.network.model.request.PutSupplierRequestBody
 import com.example.apiservices.data.source.network.model.response.GeneralResponse
+import com.example.apiservices.data.source.network.model.response.GetChangeLogFilterResponse
 import com.example.apiservices.data.source.network.model.response.GetChangeLogResponse
 import com.example.apiservices.data.source.network.model.response.GetSupplierDetailResponse
+import com.example.apiservices.data.source.network.model.response.GetSupplierFilterResponse
 import com.example.apiservices.data.source.network.model.response.GetSupplierResponse
 import com.example.apiservices.data.source.network.model.response.PostSupplierResponse
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.POST
@@ -54,4 +55,14 @@ interface SupplierApi {
     suspend fun getChangeLog(
         @QueryMap queryMap: Map<String, String?> = mapOf()
     ): Response<GetChangeLogResponse>
+
+    @GET("changelog/options")
+    suspend fun getChangeLogFilter(
+        @QueryMap queryMap: Map<String, String?> = mapOf()
+    ): Response<GetChangeLogFilterResponse>
+
+    @GET("suppliers/options")
+    suspend fun getSupplierFilter(
+        @QueryMap queryMap: Map<String, String?> = mapOf()
+    ): Response<GetSupplierFilterResponse>
 }

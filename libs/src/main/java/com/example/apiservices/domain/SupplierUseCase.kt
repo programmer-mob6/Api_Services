@@ -56,3 +56,15 @@ class GetChangeLogUseCase @Inject constructor(
     operator fun invoke(queryParams: GetChangeLogQueryParams) =
         repository.getChangeLog(queryParams)
 }
+
+class GetChangeLogFilterUseCase @Inject constructor(
+    private val repository: SupplierRepository
+) {
+    operator fun invoke() = repository.getChangeLogFilter()
+}
+
+class GetSupplierFilterUseCase @Inject constructor(
+    private val repository: SupplierRepository
+) {
+    operator fun invoke() = repository.getSupplierFilter()
+}

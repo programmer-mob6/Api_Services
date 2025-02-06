@@ -7,12 +7,13 @@ import com.example.apiservices.data.source.network.model.request.PostSupplierReq
 import com.example.apiservices.data.source.network.model.request.PutSupplierIsActiveRequestBody
 import com.example.apiservices.data.source.network.model.request.PutSupplierRequestBody
 import com.example.apiservices.data.source.network.model.response.GeneralResponse
+import com.example.apiservices.data.source.network.model.response.GetChangeLogFilterResponse
 import com.example.apiservices.data.source.network.model.response.GetChangeLogResponse
 import com.example.apiservices.data.source.network.model.response.GetSupplierDetailResponse
+import com.example.apiservices.data.source.network.model.response.GetSupplierFilterResponse
 import com.example.apiservices.data.source.network.model.response.GetSupplierResponse
 import com.example.apiservices.data.source.network.model.response.PostSupplierResponse
 import com.example.apiservices.data.source.network.services.SupplierApi
-import com.example.apiservices.domain.GetSupplierByIdUseCase
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -45,6 +46,14 @@ class SupplierApiDataSourceImpl @Inject constructor(
 
     override suspend fun getChangeLog(query: GetChangeLogQueryParams): Response<GetChangeLogResponse> {
         return supplierAPI.getChangeLog(query.toQueryMap())
+    }
+
+    override suspend fun getChangeLogFilter(): Response<GetChangeLogFilterResponse> {
+        return supplierAPI.getChangeLogFilter(GetChangeLogQueryParams().toQueryMap())
+    }
+
+    override suspend fun getSupplierFilter(): Response<GetSupplierFilterResponse> {
+        return supplierAPI.getSupplierFilter(GetSupplierQueryParams().toQueryMap())
     }
 
 
