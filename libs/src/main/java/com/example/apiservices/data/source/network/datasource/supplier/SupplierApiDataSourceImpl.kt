@@ -55,6 +55,4 @@ class SupplierApiDataSourceImpl @Inject constructor(
     override suspend fun getSupplierFilter(): Response<GetSupplierFilterResponse> {
         return supplierAPI.getSupplierFilter(GetSupplierQueryParams().toQueryMap())
     }
-
-
 }

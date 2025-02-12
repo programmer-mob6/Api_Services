@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlinx.kover)
 }
 
 android {
@@ -56,4 +57,118 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Testing
+    testImplementation(libs.truth)
+    testImplementation(libs.truth.java8.extension)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.core.testing)
+}
+
+koverReport {
+    val excludePackages = listOf(
+        "dagger.hilt.internal.aggregatedroot.codegen.*",
+        "hilt_aggregated_deps.*",
+        "com.example.apiservices.*.di.*",
+        "com.example.apiservices.*.Hilt_*",
+        "com.example.apiservices.*.*_Factory*",
+        "com.example.apiservices.*.*_HiltModules*",
+        "com.example.apiservices.*.*Module_*",
+        "com.example.apiservices.*.*MembersInjector*",
+        "com.example.apiservices.*.*_Impl*",
+        "com.example.apiservices.ComposableSingletons*",
+        "com.example.apiservices.BuildConfig*",
+        "com.example.apiservices.*.Fake*",
+        "com.example.apiservices.app.ComposableSingletons*",
+        "*_*Factory.*",
+        "*_*Factory*",
+        "*_Factory.*",
+        "Hilt_*",
+        "*_Hilt*",
+        "*.navigation.*"
+    )
+
+    val includePackages = listOf(
+        "com.example.apiservices.data.*",
+        "com.example.apiservices.domain*",
+        "com.example.apiservices.ui.*.viewmodel",
+        "com.example.apiservices.ui.*.uistate",
+        "com.example.apiservices.ui.*.model",
+    )
+
+    filters {
+        excludes {
+            classes(
+                "dagger.hilt.internal.aggregatedroot.codegen.*",
+                "hilt_aggregated_deps.*",
+                "com.example.apiservices.*.di.*",
+                "com.example.apiservices.*.Hilt_*",
+                "com.example.apiservices.*.*_Factory*",
+                "com.example.apiservices.*.*_HiltModules*",
+                "com.example.apiservices.*.*Module_*",
+                "com.example.apiservices.*.*MembersInjector*",
+                "com.example.apiservices.*.*_Impl*",
+                "com.example.apiservices.ComposableSingletons*",
+                "com.example.apiservices.BuildConfig*",
+                "com.example.apiservices.*.Fake*",
+                "com.example.apiservices.app.ComposableSingletons*"
+            )
+
+            packages(
+                "kotlinx.coroutines.*"
+            )
+        }
+    }
+
+    androidReports("debug") {
+        xml {
+            onCheck = true
+
+            setReportFile(file("result.xml"))
+
+            filters {
+                excludes {
+                    classes(
+                        excludePackages
+                    )
+
+                    packages(
+                        "kotlinx.coroutines.*"
+                    )
+                }
+
+                includes {
+                    packages(
+                        includePackages
+                    )
+                }
+            }
+        }
+        html {
+            title = "Kover Report"
+
+            charset = "UTF-8"
+
+            onCheck = true
+
+            filters {
+                excludes {
+                    classes(
+                        excludePackages
+                    )
+
+                    packages(
+                        "kotlinx.coroutines.*"
+                    )
+                }
+
+                includes {
+                    packages(
+                        includePackages
+                    )
+                }
+            }
+        }
+    }
 }

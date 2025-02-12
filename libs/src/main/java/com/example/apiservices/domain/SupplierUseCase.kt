@@ -26,7 +26,8 @@ class DeleteAssetByIdUseCase @Inject constructor(
 class AddSupplierUseCase @Inject constructor(
     private val repository: SupplierRepository
 ) {
-    operator fun invoke(body: PostSupplierRequestBody) = repository.createSupplier(body)
+    operator fun invoke(body: PostSupplierRequestBody) =
+        repository.createSupplier(body)
 }
 
 class GetSupplierByIdUseCase @Inject constructor(

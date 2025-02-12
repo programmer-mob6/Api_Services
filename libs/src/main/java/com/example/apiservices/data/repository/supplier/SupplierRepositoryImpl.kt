@@ -1,6 +1,5 @@
 package com.example.apiservices.data.repository.supplier
 
-import android.util.Log
 import com.example.apiservices.base.Result
 import com.example.apiservices.data.mapper.supplier.SupplierMapper
 import com.example.apiservices.data.model.supplier.ChangeLogEntity
@@ -57,6 +56,7 @@ class SupplierRepositoryImpl @Inject constructor(
 
     override fun createSupplier(body: PostSupplierRequestBody): Flow<Result<Unit>> = flow {
         val response = supplierApiDataSource.addSupplier(body)
+
         if (response.isSuccessful && response.code() == 201) {
             emit(Result.Success(Unit))
         } else {
@@ -68,6 +68,7 @@ class SupplierRepositoryImpl @Inject constructor(
 
     override fun deleteAssetById(body: DeleteSupplierRequestBody): Flow<Result<Unit>> = flow {
         val response = supplierApiDataSource.deleteSupplier(body)
+
         if (response.isSuccessful && response.code() == 200) {
             emit(Result.Success(Unit))
         } else {
@@ -92,6 +93,7 @@ class SupplierRepositoryImpl @Inject constructor(
 
     override fun updateSupplier(body: PutSupplierRequestBody): Flow<Result<Unit>> = flow {
         val response = supplierApiDataSource.updateSUpplier(body)
+
         if (response.isSuccessful && response.code() == 200) {
             emit(Result.Success(Unit))
         } else {
@@ -105,7 +107,7 @@ class SupplierRepositoryImpl @Inject constructor(
         flow {
             val response = supplierApiDataSource.getChangeLog(queryParams)
             val resData = response.body()?.data.orEmpty()
-            Log.d("SupplierRepositoryImpl", "getChangeLog: $queryParams")
+
             if (response.isSuccessful && response.code() == 200) {
                 emit(Result.Success(supplierMapper.mapChangeLog(resData)))
             } else {
@@ -140,6 +142,4 @@ class SupplierRepositoryImpl @Inject constructor(
     }.catch {
         emit(Result.Error(it.message))
     }.flowOn(ioDispatcher)
-
-
 }
