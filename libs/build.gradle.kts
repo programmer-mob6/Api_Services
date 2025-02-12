@@ -60,8 +60,7 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.core.testing)
-//    testImplementation(libs.mockwebserver)
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
+    testImplementation(libs.mockwebserver)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
